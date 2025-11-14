@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,13 +9,13 @@ import {
   StatusBar,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
 import ActionButton from "../components/ActionButton";
 import Colors from "../constants/Colors";
 import BaseView from "../components/base_components/BaseView";
 import BaseIcon from "../components/base_components/BaseIcon";
+import { useTransfer } from "../hooks/useTransfer";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -24,6 +24,16 @@ interface Props {
 }
 
 export default function HomeScreen({ navigation }: Props) {
+  const { accountInformation, fetchAccountInformationData } = useTransfer();
+
+  useEffect(() => {
+    fetchAccountInformationData();
+  }, []);
+
+  useEffect(() => {
+    console.log("accountInformation", accountInformation);
+  }, [accountInformation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
