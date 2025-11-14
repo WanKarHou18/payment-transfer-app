@@ -11,7 +11,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { RootStackParamList } from "../navigation/AppNavigator";
+import { RootStackParamList } from "../../navigation/AppNavigator";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -52,7 +52,7 @@ export default function TransferScreen({ navigation }: Props) {
               placeholderTextColor="#999"
             />
 
-            <Text style={styles.sectionTitle}>Amount</Text>
+            {/* <Text style={styles.sectionTitle}>Amount</Text>
             <View style={styles.amountContainer}>
               <Text style={styles.currency}>RM</Text>
               <TextInput
@@ -61,7 +61,7 @@ export default function TransferScreen({ navigation }: Props) {
                 keyboardType="decimal-pad"
                 placeholderTextColor="#999"
               />
-            </View>
+            </View> */}
 
             <Text style={styles.sectionTitle}>Note (Optional)</Text>
             <TextInput
@@ -71,8 +71,13 @@ export default function TransferScreen({ navigation }: Props) {
               multiline
             />
 
-            <TouchableOpacity style={styles.transferButton}>
-              <Text style={styles.transferButtonText}>Transfer Now</Text>
+            <TouchableOpacity
+              style={styles.transferButton}
+              onPress={() => {
+                navigation.navigate("TransferMoney");
+              }}
+            >
+              <Text style={styles.transferButtonText}>Proceed</Text>
             </TouchableOpacity>
           </View>
         </View>
