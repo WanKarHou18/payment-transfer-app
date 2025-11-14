@@ -13,6 +13,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
 import ActionButton from "../components/ActionButton";
+import Colors from "../constants/Colors";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -25,7 +26,7 @@ export default function HomeScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <LinearGradient
-        colors={["#4158D0", "#C850C0"]}
+        colors={[Colors.moderateBlue, Colors.pinkPurple]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -38,12 +39,16 @@ export default function HomeScreen({ navigation }: Props) {
             </View>
 
             <TouchableOpacity style={styles.askRytButton}>
-              <Ionicons name="sparkles" size={16} color="#fff" />
+              <Ionicons name="sparkles" size={16} color={Colors.white} />
               <Text style={styles.askRytText}>Ask Ryt AI</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Ionicons name="notifications-outline" size={24} color="#fff" />
+              <Ionicons
+                name="notifications-outline"
+                size={24}
+                color={Colors.white}
+              />
             </TouchableOpacity>
           </View>
 
@@ -51,7 +56,7 @@ export default function HomeScreen({ navigation }: Props) {
           <View style={styles.balanceCard}>
             <View style={styles.balanceHeader}>
               <Text style={styles.balanceLabel}>Total balance</Text>
-              <Ionicons name="chevron-down" size={16} color="#666" />
+              <Ionicons name="chevron-down" size={16} color={Colors.darkGrey} />
             </View>
 
             <View style={styles.balanceAmount}>
@@ -147,7 +152,7 @@ export default function HomeScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4158D0",
+    backgroundColor: Colors.moderateBlue,
   },
   gradient: {
     flex: 1,
@@ -164,19 +169,19 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: Colors.darkGrey,
     alignItems: "center",
     justifyContent: "center",
   },
   avatarText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 14,
     fontWeight: "600",
   },
   askRytButton: {
     flexDirection: "row",
     alignItems: "center",
-    backgroundColor: "rgba(255, 255, 255, 0.2)",
+    backgroundColor: Colors.darkGrey,
     paddingHorizontal: 20,
     paddingVertical: 10,
     borderRadius: 20,
@@ -186,12 +191,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   askRytText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 14,
     fontWeight: "500",
   },
   balanceCard: {
-    backgroundColor: "#F5F5F7",
+    backgroundColor: Colors.white,
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
     marginTop: 15,
@@ -207,7 +212,7 @@ const styles = StyleSheet.create({
   },
   balanceLabel: {
     fontSize: 14,
-    color: "#666",
+    color: Colors.grey,
     marginRight: 5,
   },
   balanceAmount: {
@@ -219,7 +224,7 @@ const styles = StyleSheet.create({
   amount: {
     fontSize: 36,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
     marginRight: 10,
   },
   eyeIcon: {
@@ -238,7 +243,7 @@ const styles = StyleSheet.create({
   },
   interestAmount: {
     fontSize: 13,
-    color: "#00CBA9",
+    color: Colors.leafGreen,
     fontWeight: "600",
   },
   actionButtons: {
@@ -268,12 +273,12 @@ const styles = StyleSheet.create({
   promoTitle: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
     marginBottom: 8,
   },
   promoDescription: {
     fontSize: 14,
-    color: "#333",
+    color: Colors.darkCharcoal,
     lineHeight: 20,
     marginBottom: 10,
   },
@@ -286,22 +291,22 @@ const styles = StyleSheet.create({
   iconCard: {
     width: 50,
     height: 35,
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 5,
     alignItems: "center",
     justifyContent: "center",
     borderWidth: 1,
-    borderColor: "#0000FF",
+    borderColor: Colors.deepModerateBlue,
   },
   iconText: {
     fontSize: 12,
     fontWeight: "700",
-    color: "#0000FF",
+    color: Colors.deepModerateBlue,
   },
   rmText: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#0000FF",
+    color: Colors.deepModerateBlue,
   },
   coinsIcon: {
     flexDirection: "row",
@@ -315,8 +320,8 @@ const styles = StyleSheet.create({
   rmBadge: {
     fontSize: 14,
     fontWeight: "700",
-    color: "#0000FF",
-    backgroundColor: "#fff",
+    color: Colors.deepModerateBlue,
+    backgroundColor: Colors.white,
     paddingHorizontal: 8,
     paddingVertical: 4,
     borderRadius: 8,
@@ -341,7 +346,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 15,
     padding: 15,
   },
@@ -354,19 +359,19 @@ const styles = StyleSheet.create({
     width: 45,
     height: 45,
     borderRadius: 22.5,
-    backgroundColor: "#0000FF",
+    backgroundColor: Colors.deepModerateBlue,
     alignItems: "center",
     justifyContent: "center",
   },
   rytLogoText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 14,
     fontWeight: "700",
   },
   accountName: {
     fontSize: 15,
     fontWeight: "600",
-    color: "#000",
+    color: Colors.black,
   },
   accountRight: {
     alignItems: "flex-end",
@@ -374,18 +379,18 @@ const styles = StyleSheet.create({
   accountBalance: {
     fontSize: 16,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
     marginBottom: 5,
   },
   interestBadge: {
-    backgroundColor: "#E6F0FF",
+    backgroundColor: Colors.white,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 8,
   },
   interestBadgeText: {
     fontSize: 11,
-    color: "#0000FF",
+    color: Colors.deepModerateBlue,
     fontWeight: "600",
   },
 });

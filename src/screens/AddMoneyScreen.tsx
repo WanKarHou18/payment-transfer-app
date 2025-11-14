@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
+import Colors from "../constants/Colors";
 
 type AddMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -27,7 +28,7 @@ export default function AddMoneyScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <LinearGradient
-        colors={["#4158D0", "#C850C0"]}
+        colors={[Colors.moderateBlue, Colors.pinkPurple]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -37,7 +38,7 @@ export default function AddMoneyScreen({ navigation }: Props) {
             onPress={() => navigation.goBack()}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color="#fff" />
+            <Ionicons name="arrow-back" size={24} color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Add Money</Text>
           <View style={styles.placeholder} />
@@ -81,7 +82,7 @@ export default function AddMoneyScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4158D0",
+    backgroundColor: Colors.moderateBlue,
   },
   gradient: {
     flex: 1,
@@ -100,7 +101,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 18,
     fontWeight: "600",
   },
@@ -112,20 +113,20 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 25,
   },
   label: {
     fontSize: 16,
-    color: "#666",
+    color: Colors.darkGrey,
     marginBottom: 15,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 2,
-    borderBottomColor: "#0000FF",
+    borderBottomColor: Colors.moderateBlue,
     paddingBottom: 10,
     marginBottom: 30,
   },
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 32,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
   },
   quickAmounts: {
     flexDirection: "row",
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
   },
   quickButton: {
     flex: 1,
-    backgroundColor: "#F5F5F7",
+    backgroundColor: Colors.white,
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: "center",
@@ -159,13 +160,13 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   addButton: {
-    backgroundColor: "#0000FF",
+    backgroundColor: Colors.moderateBlue,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
   },
   addButtonText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 16,
     fontWeight: "600",
   },
