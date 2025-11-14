@@ -14,6 +14,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
 import ActionButton from "../components/ActionButton";
 import Colors from "../constants/Colors";
+import BaseView from "../components/base_components/BaseView";
+import BaseIcon from "../components/base_components/BaseIcon";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -33,49 +35,61 @@ export default function HomeScreen({ navigation }: Props) {
       >
         <ScrollView showsVerticalScrollIndicator={false}>
           {/* Header */}
-          <View style={styles.header}>
-            <View style={styles.avatar}>
+          <BaseView style={styles.header}>
+            <BaseView style={styles.avatar}>
               <Text style={styles.avatarText}>GR</Text>
-            </View>
+            </BaseView>
 
             <TouchableOpacity style={styles.askRytButton}>
-              <Ionicons name="sparkles" size={16} color={Colors.white} />
+              <BaseIcon
+                type="Ionicons"
+                name="sparkles"
+                size={16}
+                color={Colors.white}
+              />
               <Text style={styles.askRytText}>Ask Ryt AI</Text>
             </TouchableOpacity>
 
             <TouchableOpacity>
-              <Ionicons
+              <BaseIcon
+                type="Ionicons"
                 name="notifications-outline"
                 size={24}
                 color={Colors.white}
               />
             </TouchableOpacity>
-          </View>
+          </BaseView>
 
           {/* Balance Card */}
-          <View style={styles.balanceCard}>
-            <View style={styles.balanceHeader}>
+          <BaseView style={styles.balanceCard}>
+            <BaseView style={styles.balanceHeader}>
               <Text style={styles.balanceLabel}>Total balance</Text>
-              <Ionicons name="chevron-down" size={16} color={Colors.darkGrey} />
-            </View>
+              <BaseIcon
+                type="Ionicons"
+                name="chevron-down"
+                size={16}
+                color={Colors.darkGrey}
+              />
+            </BaseView>
 
-            <View style={styles.balanceAmount}>
+            <BaseView style={styles.balanceAmount}>
               <Text style={styles.amount}>RM 10,345.93</Text>
-              <Ionicons
+              <BaseIcon
+                type="Ionicons"
                 name="eye-outline"
                 size={20}
-                color="#666"
+                color={Colors.black}
                 style={styles.eyeIcon}
               />
-            </View>
+            </BaseView>
 
-            <View style={styles.interestRow}>
+            <BaseView style={styles.interestRow}>
               <Text style={styles.interestLabel}>Interest earned</Text>
               <Text style={styles.interestAmount}>+RM 12.58</Text>
-            </View>
+            </BaseView>
 
             {/* Action Buttons */}
-            <View style={styles.actionButtons}>
+            <BaseView style={styles.actionButtons}>
               <ActionButton
                 icon="add"
                 label="Add money"
@@ -86,63 +100,63 @@ export default function HomeScreen({ navigation }: Props) {
                 label="Transfer"
                 onPress={() => navigation.navigate("Transfer")}
               />
-            </View>
-          </View>
+            </BaseView>
+          </BaseView>
 
           {/* Promotional Cards */}
-          <View style={styles.promoContainer}>
+          <BaseView style={styles.promoContainer}>
             {/* PayLater Card */}
-            <View style={[styles.promoCard, styles.promoCardLeft]}>
+            <BaseView style={[styles.promoCard, styles.promoCardLeft]}>
               <Text style={styles.promoTitle}>Ryt PayLater</Text>
               <Text style={styles.promoDescription}>
                 Enjoy 1.2% cashback{"\n"}on QR payments
               </Text>
-              <View style={styles.promoIcon}>
-                <View style={styles.iconCard}>
+              <BaseView style={styles.promoIcon}>
+                <BaseView style={styles.iconCard}>
                   <Text style={styles.iconText}>QR</Text>
-                </View>
+                </BaseView>
                 <Text style={styles.rmText}>RM</Text>
-              </View>
+              </BaseView>
               <TouchableOpacity>
                 <Text style={styles.promoLink}>Apply now &gt;</Text>
               </TouchableOpacity>
-            </View>
+            </BaseView>
 
             {/* Savings Card */}
-            <View style={[styles.promoCard, styles.promoCardRight]}>
-              <View style={styles.coinsIcon}>
+            <BaseView style={[styles.promoCard, styles.promoCardRight]}>
+              <BaseView style={styles.coinsIcon}>
                 <Text style={styles.coinsEmoji}>💰</Text>
                 <Text style={styles.rmBadge}>RM</Text>
-              </View>
+              </BaseView>
               <Text style={styles.promoDescription}>
                 Earn up to 4% p.a.,{"\n"}paid every day
               </Text>
               <TouchableOpacity>
                 <Text style={styles.promoLink}>Learn more &gt;</Text>
               </TouchableOpacity>
-            </View>
-          </View>
+            </BaseView>
+          </BaseView>
 
           {/* Accounts Section */}
-          <View style={styles.accountsSection}>
+          <BaseView style={styles.accountsSection}>
             <Text style={styles.accountsTitle}>Accounts</Text>
 
-            <View style={styles.accountCard}>
-              <View style={styles.accountLeft}>
-                <View style={styles.rytLogo}>
+            <BaseView style={styles.accountCard}>
+              <BaseView style={styles.accountLeft}>
+                <BaseView style={styles.rytLogo}>
                   <Text style={styles.rytLogoText}>Ryt</Text>
-                </View>
+                </BaseView>
                 <Text style={styles.accountName}>Main Account</Text>
-              </View>
+              </BaseView>
 
-              <View style={styles.accountRight}>
+              <BaseView style={styles.accountRight}>
                 <Text style={styles.accountBalance}>RM 5,000.00</Text>
-                <View style={styles.interestBadge}>
+                <BaseView style={styles.interestBadge}>
                   <Text style={styles.interestBadgeText}>3.00% p.a.</Text>
-                </View>
-              </View>
-            </View>
-          </View>
+                </BaseView>
+              </BaseView>
+            </BaseView>
+          </BaseView>
         </ScrollView>
       </LinearGradient>
     </SafeAreaView>

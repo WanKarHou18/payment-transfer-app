@@ -2,7 +2,7 @@ const Colors = {
   black: "#000",
   grey: "#666",
   white: "#fff",
-  darkGrey: "rgba(255, 255, 255, 0.2)",
+  darkGrey: "#FFFFFF33",
   darkCharcoal: "#333",
   moderateBlue: "#4158D0",
   deepModerateBlue: "#0000FF",
