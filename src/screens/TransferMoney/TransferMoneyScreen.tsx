@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,6 +12,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/AppNavigator";
+import { sanitizeCashInput } from "../../helpers/DataHelper";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -23,6 +24,10 @@ interface Props {
 }
 
 export default function TransferMoneyScreen({ navigation }: Props) {
+  const quickAmounts = [50, 100, 500];
+
+  const [selectedAmount, setSelectedAmount] = useState(0.0);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -50,6 +55,12 @@ export default function TransferMoneyScreen({ navigation }: Props) {
               <Text style={styles.currency}>RM</Text>
               <TextInput
                 style={styles.input}
+                value={selectedAmount.toString()}
+                onChangeText={(text) => {
+                  const finalNumber = sanitizeCashInput(text);
+                  // @ts-ignore
+                  setSelectedAmount(finalNumber);
+                }}
                 placeholder="0.00"
                 keyboardType="decimal-pad"
                 placeholderTextColor="#999"
@@ -57,15 +68,17 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             </View>
 
             <View style={styles.quickAmounts}>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 50</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 100</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 500</Text>
-              </TouchableOpacity>
+              {quickAmounts?.map((amount) => (
+                <TouchableOpacity
+                  key={amount}
+                  style={styles.quickButton}
+                  onPress={() => {
+                    setSelectedAmount(amount);
+                  }}
+                >
+                  <Text style={styles.quickText}>RM {amount}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
 
             <TouchableOpacity style={styles.addButton}>
