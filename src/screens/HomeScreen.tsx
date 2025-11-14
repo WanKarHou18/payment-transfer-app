@@ -1,8 +1,8 @@
+// third party
 import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   SafeAreaView,
   TouchableOpacity,
   ScrollView,
@@ -11,6 +11,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
+
+// this project
 import ActionButton from "../components/ActionButton";
 import Colors from "../constants/Colors";
 import BaseView from "../components/base_components/BaseView";

@@ -1,6 +1,10 @@
+// third party
 import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+
+//this project
+import Colors from "../constants/Colors";
 
 interface ActionButtonProps {
   icon: string;
@@ -22,7 +26,7 @@ const ActionButton = ({ icon, label, onPress }: ActionButtonProps) => {
   return (
     <View style={styles.actionButton}>
       <TouchableOpacity style={styles.actionButtonCircle} onPress={onPress}>
-        <Ionicons name={getIconName(icon)} size={24} color="#fff" />
+        <Ionicons name={getIconName(icon)} size={24} color={Colors.white} />
       </TouchableOpacity>
       <Text style={styles.actionButtonLabel}>{label}</Text>
     </View>

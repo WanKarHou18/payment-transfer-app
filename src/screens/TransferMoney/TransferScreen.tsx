@@ -1,3 +1,4 @@
+// third party
 import React from "react";
 import {
   StyleSheet,
@@ -11,6 +12,8 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
+
+// this project
 import { RootStackParamList } from "../../navigation/AppNavigator";
 
 type TransferScreenNavigationProp = StackNavigationProp<

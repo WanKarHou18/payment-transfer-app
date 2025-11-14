@@ -1,5 +1,8 @@
+// third party
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+
+// this project
 import HomeScreen from "../screens/HomeScreen";
 import AddMoneyScreen from "../screens/AddMoneyScreen";
 import TransferScreen from "../screens/TransferMoney/TransferScreen";
