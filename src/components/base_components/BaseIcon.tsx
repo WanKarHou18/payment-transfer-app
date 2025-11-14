@@ -5,7 +5,6 @@ import { MaterialIcons } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 
-// Example Colors object
 const Colors = {
   darkGrey: "#333",
   primary: "#4158D0",

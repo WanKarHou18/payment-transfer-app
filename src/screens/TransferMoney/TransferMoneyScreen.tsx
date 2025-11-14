@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableOpacity,
   StatusBar,
   TextInput,
@@ -16,6 +15,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 // this project
 import { RootStackParamList } from "../../navigation/AppNavigator";
 import { sanitizeCashInput } from "../../helpers/DataHelper";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

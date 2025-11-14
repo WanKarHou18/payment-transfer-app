@@ -4,7 +4,6 @@ import {
   StyleSheet,
   Text,
   View,
-  SafeAreaView,
   TouchableOpacity,
   StatusBar,
   TextInput,
@@ -15,6 +14,7 @@ import { StackNavigationProp } from "@react-navigation/stack";
 
 // this project
 import { RootStackParamList } from "../../navigation/AppNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,

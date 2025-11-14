@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 import {
   StyleSheet,
   Text,
-  SafeAreaView,
   TouchableOpacity,
   ScrollView,
   StatusBar,
@@ -11,6 +10,7 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../navigation/AppNavigator";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 // this project
 import ActionButton from "../components/ActionButton";
