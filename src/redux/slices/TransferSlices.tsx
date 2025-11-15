@@ -7,8 +7,12 @@ import api from "../../api/TransferApi";
 const initialState = {
   transfer: {
     amount: 0,
+    recipientName: "",
+    note: "",
   },
-  accountInformation: {},
+  accountInformation: {
+    balance: 10,
+  },
   loading: false,
   error: null,
 };
@@ -19,6 +23,11 @@ export const fetchAccountInformation = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const result = await api.fetchAccountInformation();
+
+      if (result?.status === 0) {
+        return thunkAPI.rejectWithValue(result?.data);
+      }
+
       return result;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error?.message);
@@ -42,7 +51,7 @@ const transferSlice = createSlice({
     },
 
     updateAccountInformation: (state, action) => {
-      state.transfer = {
+      state.accountInformation = {
         ...state.accountInformation,
         ...action.payload,
       };
@@ -64,6 +73,7 @@ const transferSlice = createSlice({
       })
       .addCase(fetchAccountInformation.rejected, (state, action) => {
         state.loading = false;
+        // @ts-ignore
         state.error = action.payload;
       });
   },

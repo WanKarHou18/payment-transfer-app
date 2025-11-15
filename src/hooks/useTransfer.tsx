@@ -2,7 +2,12 @@
 import { useDispatch, useSelector } from "react-redux";
 
 // this project
-import { fetchAccountInformation } from "../redux/slices/TransferSlices";
+import {
+  clearTransferDetail,
+  fetchAccountInformation,
+  updateAccountInformation,
+  updateTransferDetail,
+} from "../redux/slices/TransferSlices";
 
 export const useTransfer = () => {
   const dispatch = useDispatch();
@@ -14,9 +19,24 @@ export const useTransfer = () => {
     dispatch(fetchAccountInformation());
   };
 
+  const updateTransferDetailData = (payload: {}) => {
+    dispatch(updateTransferDetail(payload));
+  };
+
+  const clearTransferDetailData = () => {
+    dispatch(clearTransferDetail());
+  };
+
+  const updateAccountInformationData = (payload: {}) => {
+    dispatch(updateAccountInformation(payload));
+  };
+
   return {
     transfer,
     accountInformation,
     fetchAccountInformationData,
+    updateTransferDetailData,
+    clearTransferDetailData,
+    updateAccountInformationData,
   };
 };

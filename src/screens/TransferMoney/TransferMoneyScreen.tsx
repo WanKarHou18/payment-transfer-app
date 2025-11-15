@@ -16,6 +16,8 @@ import { StackNavigationProp } from "@react-navigation/stack";
 import { RootStackParamList } from "../../navigation/AppNavigator";
 import { sanitizeCashInput } from "../../helpers/DataHelper";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTransfer } from "../../hooks/useTransfer";
+import Colors from "../../constants/Colors";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -27,6 +29,14 @@ interface Props {
 }
 
 export default function TransferMoneyScreen({ navigation }: Props) {
+  const {
+    updateTransferDetailData,
+    transfer,
+    accountInformation,
+    clearTransferDetailData,
+    updateAccountInformationData,
+  } = useTransfer();
+  console.log("TM transfer", transfer);
   const quickAmounts = [50, 100, 500];
 
   const [selectedAmount, setSelectedAmount] = useState(0.0);
@@ -42,10 +52,17 @@ export default function TransferMoneyScreen({ navigation }: Props) {
       >
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              updateTransferDetailData({
+                amount: 0,
+                recipientName: transfer?.recipientName,
+                note: transfer?.note,
+              });
+              navigation.goBack();
+            }}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color="#fff" />
+            <Ionicons name="arrow-back" size={24} color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
@@ -84,7 +101,19 @@ export default function TransferMoneyScreen({ navigation }: Props) {
               ))}
             </View>
 
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity
+              style={styles.addButton}
+              onPress={() => {
+                clearTransferDetailData();
+                const finalBalance =
+                  accountInformation?.balance + selectedAmount;
+                console.log("finalBalance", finalBalance);
+                updateAccountInformationData({
+                  balance: finalBalance,
+                });
+                navigation.navigate("Home");
+              }}
+            >
               <Text style={styles.addButtonText}>Transfer</Text>
             </TouchableOpacity>
           </View>

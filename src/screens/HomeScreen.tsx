@@ -26,11 +26,13 @@ interface Props {
 }
 
 export default function HomeScreen({ navigation }: Props) {
-  const { accountInformation, fetchAccountInformationData } = useTransfer();
+  const { accountInformation, fetchAccountInformationData, transfer } =
+    useTransfer();
+  console.log("HS transfer", transfer);
 
-  useEffect(() => {
-    fetchAccountInformationData();
-  }, []);
+  // useEffect(() => {
+  //   fetchAccountInformationData();
+  // }, []);
 
   useEffect(() => {
     console.log("accountInformation", accountInformation);
@@ -85,7 +87,10 @@ export default function HomeScreen({ navigation }: Props) {
             </BaseView>
 
             <BaseView style={styles.balanceAmount}>
-              <Text style={styles.amount}>RM 10,345.93</Text>
+              <Text style={styles.amount}>
+                RM{" "}
+                {accountInformation?.balance ? accountInformation?.balance : 0}
+              </Text>
               <BaseIcon
                 type="Ionicons"
                 name="eye-outline"

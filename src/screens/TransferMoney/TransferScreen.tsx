@@ -1,5 +1,4 @@
-// third party
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,9 +11,10 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 
-// this project
 import { RootStackParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { useTransfer } from "../../hooks/useTransfer";
+import Colors from "../../constants/Colors";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -26,6 +26,11 @@ interface Props {
 }
 
 export default function TransferScreen({ navigation }: Props) {
+  const { updateTransferDetailData, transfer } = useTransfer();
+  console.log("T transfer", transfer);
+  const [recipientName, setRecipientName] = useState(transfer?.recipientName);
+  const [note, setNote] = useState(transfer?.note);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -37,10 +42,19 @@ export default function TransferScreen({ navigation }: Props) {
       >
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              setRecipientName("");
+              setNote("");
+              updateTransferDetailData({
+                amount: 0,
+                recipientName: "",
+                note: "",
+              });
+              navigation.goBack();
+            }}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color="#fff" />
+            <Ionicons name="arrow-back" size={24} color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
@@ -51,32 +65,30 @@ export default function TransferScreen({ navigation }: Props) {
             <Text style={styles.sectionTitle}>Recipient</Text>
             <TextInput
               style={styles.input}
-              placeholder="Enter phone number or account"
-              placeholderTextColor="#999"
+              value={recipientName}
+              onChangeText={setRecipientName} // simpler
+              placeholder="Enter recipient name"
+              placeholderTextColor={Colors.grey}
             />
-
-            {/* <Text style={styles.sectionTitle}>Amount</Text>
-            <View style={styles.amountContainer}>
-              <Text style={styles.currency}>RM</Text>
-              <TextInput
-                style={styles.amountInput}
-                placeholder="0.00"
-                keyboardType="decimal-pad"
-                placeholderTextColor="#999"
-              />
-            </View> */}
 
             <Text style={styles.sectionTitle}>Note (Optional)</Text>
             <TextInput
               style={[styles.input, styles.noteInput]}
+              value={note}
+              onChangeText={setNote} // simpler
               placeholder="Add a note"
-              placeholderTextColor="#999"
+              placeholderTextColor={Colors.grey}
               multiline
             />
 
             <TouchableOpacity
               style={styles.transferButton}
               onPress={() => {
+                updateTransferDetailData({
+                  ...transfer,
+                  recipientName,
+                  note,
+                });
                 navigation.navigate("TransferMoney");
               }}
             >
@@ -120,7 +132,7 @@ const styles = StyleSheet.create({
   },
 
   placeholder: {
-    width: 24, // balances arrow icon
+    width: 24,
   },
 
   /* ===== CONTENT ===== */
