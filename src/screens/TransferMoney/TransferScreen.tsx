@@ -1,3 +1,4 @@
+// third party
 import React, { useState } from "react";
 import {
   StyleSheet,
@@ -6,13 +7,18 @@ import {
   TouchableOpacity,
   StatusBar,
   TextInput,
+  Modal,
+  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
-
-import { RootStackParamList } from "../../navigation/AppNavigator";
+import * as Contacts from "expo-contacts";
+import { Alert } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+// this project
+import { RootStackParamList } from "../../navigation/AppNavigator";
 import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
 import BaseAlert from "../../components/base_components/BaseAlert";
@@ -36,6 +42,9 @@ export default function TransferScreen({ navigation }: Props) {
   const [showAlert, setShowAlert] = useState(false);
   const [alertMessage, setAlertMessage] = useState("");
 
+  const [contactsList, setContactsList] = useState([]);
+  const [showContactsModal, setShowContactsModal] = useState(false);
+
   const errorsChecking = () => {
     // empty recipient name
     if (!recipientName) {
@@ -46,6 +55,26 @@ export default function TransferScreen({ navigation }: Props) {
     return false;
   };
 
+  const pickContact = async () => {
+    const { status } = await Contacts.requestPermissionsAsync();
+
+    if (status !== "granted") {
+      Alert.alert("Permission Denied", "Cannot access contacts.");
+      return;
+    }
+
+    const { data } = await Contacts.getContactsAsync({
+      fields: [Contacts.Fields.Name],
+    });
+
+    if (!data || data.length === 0) {
+      Alert.alert("No Contacts", "Your contact list is empty.");
+      return;
+    }
+
+    setContactsList(data); // show in modal
+    setShowContactsModal(true);
+  };
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
@@ -81,13 +110,23 @@ export default function TransferScreen({ navigation }: Props) {
               Recipient
               <Text style={{ color: "red" }}> *</Text>
             </Text>
-            <TextInput
-              style={styles.input}
-              value={recipientName}
-              onChangeText={setRecipientName} // simpler
-              placeholder="Enter recipient name"
-              placeholderTextColor={Colors.grey}
-            />
+
+            <View style={styles.contactRow}>
+              <TextInput
+                style={[styles.input, { flex: 1 }]}
+                value={recipientName}
+                onChangeText={setRecipientName}
+                placeholder="Enter recipient name"
+                placeholderTextColor={Colors.grey}
+              />
+
+              <TouchableOpacity
+                style={styles.contactButton}
+                onPress={pickContact}
+              >
+                <Ionicons name="person" size={22} color={Colors.white} />
+              </TouchableOpacity>
+            </View>
 
             <Text style={styles.sectionTitle}>Note (Optional)</Text>
             <TextInput
@@ -126,6 +165,39 @@ export default function TransferScreen({ navigation }: Props) {
         message={alertMessage}
         onHide={() => setShowAlert(false)}
       />
+      <Modal visible={showContactsModal} transparent animationType="fade">
+        <View style={styles.modalBackdrop}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalTitle}>Select Recipient</Text>
+
+            <FlatList
+              data={contactsList}
+              keyExtractor={(item) => item?.id}
+              style={{ maxHeight: 350 }}
+              showsVerticalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={styles.contactItem}
+                  onPress={() => {
+                    setRecipientName(item?.name || "");
+                    setShowContactsModal(false);
+                  }}
+                >
+                  <Ionicons name="person-circle" size={24} color="#666" />
+                  <Text style={styles.contactName}>{item?.name}</Text>
+                </TouchableOpacity>
+              )}
+            />
+
+            <TouchableOpacity
+              style={styles.closeBtn}
+              onPress={() => setShowContactsModal(false)}
+            >
+              <Text style={styles.closeText}>Cancel</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 }
@@ -254,5 +326,78 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
     fontWeight: "700",
+  },
+  contactRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 10,
+  },
+
+  contactButton: {
+    marginLeft: 10,
+    backgroundColor: Colors.moderateBlue,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    borderRadius: 10,
+    justifyContent: "center",
+    alignItems: "center",
+    elevation: 3,
+  },
+  //Modal Backdrop + Modal Container
+  contactName: {
+    marginLeft: 12,
+    fontSize: 16,
+    color: "#333",
+  },
+  modalBackdrop: {
+    flex: 1,
+    backgroundColor: "rgba(0,0,0,0.4)",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  modalContent: {
+    width: "85%",
+    maxHeight: "70%",
+    backgroundColor: "#fff",
+    borderRadius: 16,
+    paddingVertical: 20,
+    paddingHorizontal: 15,
+
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.3,
+    shadowRadius: 6,
+    elevation: 6,
+  },
+  //Modal Title
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: "700",
+    textAlign: "center",
+    marginBottom: 15,
+    color: "#333",
+  },
+  //Contact List Item
+  contactItem: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 12,
+    paddingHorizontal: 8,
+    borderBottomWidth: 1,
+    borderBottomColor: "#eee",
+  },
+  //Cancel Button
+  closeBtn: {
+    marginTop: 15,
+    alignSelf: "center",
+    paddingVertical: 10,
+    paddingHorizontal: 30,
+    borderRadius: 20,
+    backgroundColor: "#ddd",
+  },
+  closeText: {
+    fontSize: 16,
+    fontWeight: "600",
+    color: "#333",
   },
 });

@@ -23,6 +23,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      "expo-contacts",
+      {
+        "contactsPermission": "Allow $(PRODUCT_NAME) to access your contacts."
+      }
+    ]
   }
 }

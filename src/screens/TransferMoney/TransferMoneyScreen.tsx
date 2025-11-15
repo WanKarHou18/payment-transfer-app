@@ -78,9 +78,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
     const success = await authenticateFingerprint();
     if (!success) {
       setShowAlert(true);
-      setAlertMessage(
-        "Authentication Failed', 'Unable to confirm the payment."
-      );
+      setAlertMessage("Authentication Failed, Unable to confirm the payment.");
       return;
     }
 
