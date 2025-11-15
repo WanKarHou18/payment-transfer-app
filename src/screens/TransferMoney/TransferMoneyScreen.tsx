@@ -20,6 +20,10 @@ import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
 import SuccessModal from "../../components/TransferSuccessModal";
 import BaseAlert from "../../components/base_components/BaseAlert";
+import {
+  authenticateFingerprint,
+  isFingerprintAvailable,
+} from "../../helpers/FingerPrint";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -55,6 +59,32 @@ export default function TransferMoneyScreen({ navigation }: Props) {
     }
 
     return false;
+  };
+
+  const handleTransfer = async () => {
+    const errorOccured = errorsChecking();
+    if (errorOccured) {
+      setShowAlert(errorOccured);
+      return;
+    }
+    const fingerprintAvailable = await isFingerprintAvailable();
+    if (!fingerprintAvailable) {
+      setShowAlert(true);
+      setAlertMessage(
+        "'Your device does not support fingerprint authentication or no fingerprint is enrolled"
+      );
+      return;
+    }
+    const success = await authenticateFingerprint();
+    if (!success) {
+      setShowAlert(true);
+      setAlertMessage(
+        "Authentication Failed', 'Unable to confirm the payment."
+      );
+      return;
+    }
+
+    setModalVisible(true);
   };
 
   return (
@@ -117,17 +147,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
               ))}
             </View>
 
-            <TouchableOpacity
-              style={styles.addButton}
-              onPress={() => {
-                const errorOccured = errorsChecking();
-                if (errorOccured) {
-                  setShowAlert(errorOccured);
-                  return;
-                }
-                setModalVisible(true);
-              }}
-            >
+            <TouchableOpacity style={styles.addButton} onPress={handleTransfer}>
               <Text style={styles.addButtonText}>Transfer</Text>
             </TouchableOpacity>
           </View>
