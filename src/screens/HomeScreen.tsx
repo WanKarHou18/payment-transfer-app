@@ -20,6 +20,7 @@ import BaseView from "../components/base_components/BaseView";
 import BaseIcon from "../components/base_components/BaseIcon";
 import { useTransfer } from "../hooks/useTransfer";
 import { formatCurrency } from "../helpers/DataHelper";
+import BaseLoader from "../components/base_components/BaseLoader";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -33,6 +34,7 @@ export default function HomeScreen({ navigation }: Props) {
     fetchAccountInformationData,
     transfer,
     updateTransferDetailData,
+    loading,
   } = useTransfer();
   console.log("HS transfer", transfer);
 
@@ -84,6 +86,7 @@ export default function HomeScreen({ navigation }: Props) {
         style={styles.gradient}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
+          {loading && <BaseLoader />}
           {/* Header */}
           <BaseView style={styles.header}>
             <BaseView style={styles.avatar}>

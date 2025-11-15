@@ -24,6 +24,7 @@ import {
   authenticateFingerprint,
   isFingerprintAvailable,
 } from "../helpers/FingerPrint";
+import BaseLoader from "../components/base_components/BaseLoader";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -35,7 +36,7 @@ interface Props {
 }
 
 export default function TransferMoneyScreen({ navigation }: Props) {
-  const { topUpBalanceData } = useTransfer();
+  const { topUpBalanceData, loading } = useTransfer();
 
   const quickAmounts = [50, 100, 500];
   const [selectedAmount, setSelectedAmount] = useState(0.0);
@@ -83,6 +84,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
+      {loading && <BaseLoader />}
       <LinearGradient
         colors={["#4158D0", "#C850C0"]}
         start={{ x: 0, y: 0 }}
