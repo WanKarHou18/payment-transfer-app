@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
+  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -38,6 +39,27 @@ export default function HomeScreen({ navigation }: Props) {
   useEffect(() => {
     console.log("accountInformation", accountInformation);
   }, [accountInformation]);
+
+  const renderTransactionItem = ({ item }: any) => (
+    <BaseView style={styles.accountCard}>
+      {/* LEFT SIDE */}
+      <BaseView style={styles.accountLeft}>
+        <BaseView style={styles.rytLogo}>
+          <Text style={styles.rytLogoText}>Ryt</Text>
+        </BaseView>
+
+        <BaseView>
+          <Text style={styles.accountName}>{item.recipientName}</Text>
+          {item.note ? <Text>{item.note}</Text> : null}
+        </BaseView>
+      </BaseView>
+
+      {/* RIGHT SIDE */}
+      <BaseView style={styles.accountRight}>
+        <Text style={styles.accountBalance}>RM {item.amount.toFixed(2)}</Text>
+      </BaseView>
+    </BaseView>
+  );
 
   return (
     <SafeAreaView style={styles.container}>
@@ -157,25 +179,15 @@ export default function HomeScreen({ navigation }: Props) {
             </BaseView>
           </BaseView>
 
-          {/* Accounts Section */}
+          {/* Transactions Section */}
           <BaseView style={styles.accountsSection}>
-            <Text style={styles.accountsTitle}>Accounts</Text>
-
-            <BaseView style={styles.accountCard}>
-              <BaseView style={styles.accountLeft}>
-                <BaseView style={styles.rytLogo}>
-                  <Text style={styles.rytLogoText}>Ryt</Text>
-                </BaseView>
-                <Text style={styles.accountName}>Main Account</Text>
-              </BaseView>
-
-              <BaseView style={styles.accountRight}>
-                <Text style={styles.accountBalance}>RM 5,000.00</Text>
-                <BaseView style={styles.interestBadge}>
-                  <Text style={styles.interestBadgeText}>3.00% p.a.</Text>
-                </BaseView>
-              </BaseView>
-            </BaseView>
+            <Text style={styles.accountsTitle}>Transactions</Text>
+            <FlatList
+              data={accountInformation?.transactions || []}
+              renderItem={renderTransactionItem}
+              keyExtractor={(_: any, index: number) => index.toString()}
+              contentContainerStyle={{ paddingVertical: 10 }}
+            />
           </BaseView>
         </ScrollView>
       </LinearGradient>
@@ -383,6 +395,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.white,
     borderRadius: 15,
     padding: 15,
+    marginBottom: 10,
   },
   accountLeft: {
     flexDirection: "row",

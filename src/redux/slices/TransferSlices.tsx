@@ -12,6 +12,7 @@ const initialState = {
   },
   accountInformation: {
     balance: 500,
+    transactions: [],
   },
   loading: false,
   error: null,

@@ -30,7 +30,10 @@ function sendResponse(res, status, data) {
 
 // Fetch / Update account balance
 app.get("/balance", (req, res) => {
-  sendResponse(res, 1, { balance: account.balance });
+  sendResponse(res, 1, {
+    balance: account.balance,
+    transactions: transactions,
+  });
 });
 
 app.post("/balance", (req, res) => {
