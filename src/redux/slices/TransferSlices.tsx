@@ -16,6 +16,7 @@ const initialState = {
   },
   loading: false,
   error: null,
+  transferSuccess: false,
 };
 
 // Thunk to fetch transfer info
@@ -36,12 +37,11 @@ export const fetchAccountInformationThunk = createAsyncThunk(
   }
 );
 
-// Top up balance
-export const topUpBalanceThunk = createAsyncThunk(
-  "transfer/topUpBalance",
+export const transferAmountThunk = createAsyncThunk(
+  "transfer/transferAmount",
   async (payload, thunkAPI) => {
     try {
-      const result = await api.topUpBalance(payload);
+      const result = await api.transferAmount(payload);
 
       if (result?.status === 0) {
         return thunkAPI.rejectWithValue(result?.data);
@@ -54,11 +54,12 @@ export const topUpBalanceThunk = createAsyncThunk(
   }
 );
 
-export const transferAmountThunk = createAsyncThunk(
-  "transfer/transferAmount",
+// Top up balance
+export const topUpBalanceThunk = createAsyncThunk(
+  "transfer/topUpBalance",
   async (payload, thunkAPI) => {
     try {
-      const result = await api.transferAmount(payload);
+      const result = await api.topUpBalance(payload);
 
       if (result?.status === 0) {
         return thunkAPI.rejectWithValue(result?.data);
@@ -96,6 +97,14 @@ const transferSlice = createSlice({
     clearAccountInformation: (state) => {
       state.accountInformation = initialState.accountInformation;
     },
+
+    clearError: (state) => {
+      state.error = initialState.error;
+    },
+
+    clearTransferSuccess: (state) => {
+      state.transferSuccess = initialState.transferSuccess;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -116,14 +125,17 @@ const transferSlice = createSlice({
       // Transfer Amount
       .addCase(transferAmountThunk.pending, (state) => {
         state.loading = true;
+        state.transferSuccess = false;
         state.error = null;
       })
       .addCase(transferAmountThunk.fulfilled, (state, action) => {
         state.loading = false;
+        state.transferSuccess = true;
         state.error = null;
       })
       .addCase(transferAmountThunk.rejected, (state, action) => {
         state.loading = false;
+        state.transferSuccess = false;
         // @ts-ignore
         state.error = action.payload;
       })
@@ -148,6 +160,8 @@ const transferSlice = createSlice({
 export const {
   updateTransferDetail,
   clearTransferDetail,
+  clearError,
+  clearTransferSuccess,
   updateAccountInformation,
   clearAccountInformation,
 } = transferSlice.actions;

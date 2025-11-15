@@ -9,13 +9,14 @@ import {
   transferAmountThunk,
   updateAccountInformation,
   updateTransferDetail,
+  clearError,
+  clearTransferSuccess,
 } from "../redux/slices/TransferSlices";
 
 export const useTransfer = () => {
   const dispatch = useDispatch();
-  const { transfer, accountInformation } = useSelector(
-    (state: any) => state.transfer
-  );
+  const { transfer, accountInformation, loading, error, transferSuccess } =
+    useSelector((state: any) => state.transfer);
 
   const fetchAccountInformationData = () => {
     dispatch(fetchAccountInformationThunk());
@@ -40,14 +41,27 @@ export const useTransfer = () => {
   const topUpBalanceData = (payload: {}) => {
     dispatch(topUpBalanceThunk(payload));
   };
+
+  const clearErrorData = () => {
+    dispatch(clearError());
+  };
+
+  const clearTransferSuccessData = () => {
+    dispatch(clearTransferSuccess());
+  };
   return {
+    transferSuccess,
+    loading,
+    error,
     transfer,
     accountInformation,
+    clearErrorData,
     fetchAccountInformationData,
     updateTransferDetailData,
     clearTransferDetailData,
     updateAccountInformationData,
     topUpBalanceData,
     transferAmountData,
+    clearTransferSuccessData,
   };
 };

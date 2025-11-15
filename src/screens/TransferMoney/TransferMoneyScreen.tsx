@@ -1,5 +1,5 @@
 // third party
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -37,9 +37,14 @@ interface Props {
 export default function TransferMoneyScreen({ navigation }: Props) {
   const {
     updateTransferDetailData,
-    transfer,
     clearTransferDetailData,
     transferAmountData,
+    clearTransferSuccessData,
+    clearErrorData,
+    transfer,
+    transferSuccess,
+    loading,
+    error,
   } = useTransfer();
   console.log("TM transfer", transfer);
 
@@ -81,8 +86,27 @@ export default function TransferMoneyScreen({ navigation }: Props) {
       return;
     }
 
-    setModalVisible(true);
+    transferAmountData({
+      amount: selectedAmount,
+      recipientName: transfer?.recipientName,
+      note: transfer?.note,
+    });
   };
+
+  useEffect(() => {
+    if (error) {
+      setShowAlert(true);
+      setAlertMessage(error);
+    }
+  }, [loading, error]);
+
+  useEffect(() => {
+    if (!loading && transferSuccess) {
+      setModalVisible(true);
+    } else {
+      setModalVisible(false);
+    }
+  }, [transferSuccess]);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -153,21 +177,23 @@ export default function TransferMoneyScreen({ navigation }: Props) {
       <SuccessModal
         visible={modalVisible}
         onClose={() => {
-          clearTransferDetailData();
-          transferAmountData({
-            amount: selectedAmount,
-            recipientName: transfer?.recipientName,
-            note: transfer?.note,
-          });
-          navigation.navigate("Home");
           setModalVisible(false);
+          clearErrorData();
+          clearTransferDetailData();
+          clearTransferSuccessData();
+          navigation.navigate("Home");
         }}
       />
       <BaseAlert
         visible={showAlert}
         type="error"
         message={alertMessage}
-        onHide={() => setShowAlert(false)}
+        onHide={() => {
+          clearTransferSuccessData();
+          setShowAlert(false);
+          setAlertMessage("");
+          clearErrorData();
+        }}
       />
     </SafeAreaView>
   );
