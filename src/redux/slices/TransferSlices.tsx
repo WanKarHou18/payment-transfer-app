@@ -28,7 +28,7 @@ export const fetchAccountInformation = createAsyncThunk(
         return thunkAPI.rejectWithValue(result?.data);
       }
 
-      return result;
+      return result?.data || { balance: 0 };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(error?.message);
     }

@@ -31,9 +31,9 @@ export default function HomeScreen({ navigation }: Props) {
     useTransfer();
   console.log("HS transfer", transfer);
 
-  // useEffect(() => {
-  //   fetchAccountInformationData();
-  // }, []);
+  useEffect(() => {
+    fetchAccountInformationData();
+  }, []);
 
   useEffect(() => {
     console.log("accountInformation", accountInformation);
