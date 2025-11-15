@@ -15,3 +15,8 @@ export const sanitizeCashInput = (text: string): string => {
 
   return sanitizedText;
 };
+
+export function formatCurrency(amount: number | undefined | null): string {
+  if (amount === undefined || amount === null) return "0.00";
+  return amount.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}

@@ -18,6 +18,7 @@ import Colors from "../constants/Colors";
 import BaseView from "../components/base_components/BaseView";
 import BaseIcon from "../components/base_components/BaseIcon";
 import { useTransfer } from "../hooks/useTransfer";
+import { formatCurrency } from "../helpers/DataHelper";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -89,7 +90,9 @@ export default function HomeScreen({ navigation }: Props) {
             <BaseView style={styles.balanceAmount}>
               <Text style={styles.amount}>
                 RM{" "}
-                {accountInformation?.balance ? accountInformation?.balance : 0}
+                {accountInformation?.balance
+                  ? formatCurrency(accountInformation?.balance)
+                  : 0.0}
               </Text>
               <BaseIcon
                 type="Ionicons"
@@ -132,7 +135,7 @@ export default function HomeScreen({ navigation }: Props) {
                 <BaseView style={styles.iconCard}>
                   <Text style={styles.iconText}>QR</Text>
                 </BaseView>
-                <Text style={styles.rmText}>RM</Text>
+                <Text style={styles.rmText}>RM 12</Text>
               </BaseView>
               <TouchableOpacity>
                 <Text style={styles.promoLink}>Apply now &gt;</Text>
@@ -143,7 +146,7 @@ export default function HomeScreen({ navigation }: Props) {
             <BaseView style={[styles.promoCard, styles.promoCardRight]}>
               <BaseView style={styles.coinsIcon}>
                 <Text style={styles.coinsEmoji}>💰</Text>
-                <Text style={styles.rmBadge}>RM</Text>
+                <Text style={styles.rmBadge}>RM 50</Text>
               </BaseView>
               <Text style={styles.promoDescription}>
                 Earn up to 4% p.a.,{"\n"}paid every day
