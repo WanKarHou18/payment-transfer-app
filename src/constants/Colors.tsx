@@ -8,6 +8,7 @@ const Colors = {
   deepModerateBlue: "#0000FF",
   pinkPurple: "#C850C0",
   leafGreen: "#00CBA9",
+  success: "#5cb85c",
 };
 
 export default Colors;

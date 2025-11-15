@@ -18,6 +18,7 @@ import { sanitizeCashInput } from "../../helpers/DataHelper";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
+import SuccessModal from "../../components/TransferSuccessModal";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -37,9 +38,10 @@ export default function TransferMoneyScreen({ navigation }: Props) {
     updateAccountInformationData,
   } = useTransfer();
   console.log("TM transfer", transfer);
-  const quickAmounts = [50, 100, 500];
 
+  const quickAmounts = [50, 100, 500];
   const [selectedAmount, setSelectedAmount] = useState(0.0);
+  const [modalVisible, setModalVisible] = useState(false);
 
   return (
     <SafeAreaView style={styles.container}>
@@ -104,14 +106,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             <TouchableOpacity
               style={styles.addButton}
               onPress={() => {
-                clearTransferDetailData();
-                const finalBalance =
-                  accountInformation?.balance + selectedAmount;
-                console.log("finalBalance", finalBalance);
-                updateAccountInformationData({
-                  balance: finalBalance,
-                });
-                navigation.navigate("Home");
+                setModalVisible(true);
               }}
             >
               <Text style={styles.addButtonText}>Transfer</Text>
@@ -119,6 +114,19 @@ export default function TransferMoneyScreen({ navigation }: Props) {
           </View>
         </View>
       </LinearGradient>
+      <SuccessModal
+        visible={modalVisible}
+        onClose={() => {
+          clearTransferDetailData();
+          const finalBalance = accountInformation?.balance - selectedAmount;
+          console.log("finalBalance", finalBalance);
+          updateAccountInformationData({
+            balance: finalBalance,
+          });
+          navigation.navigate("Home");
+          setModalVisible(false);
+        }}
+      />
     </SafeAreaView>
   );
 }

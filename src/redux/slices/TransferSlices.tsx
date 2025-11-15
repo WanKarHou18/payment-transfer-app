@@ -11,7 +11,7 @@ const initialState = {
     note: "",
   },
   accountInformation: {
-    balance: 10,
+    balance: 500,
   },
   loading: false,
   error: null,
