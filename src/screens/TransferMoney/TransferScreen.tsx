@@ -15,6 +15,7 @@ import { RootStackParamList } from "../../navigation/AppNavigator";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
+import BaseAlert from "../../components/base_components/BaseAlert";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -27,9 +28,23 @@ interface Props {
 
 export default function TransferScreen({ navigation }: Props) {
   const { updateTransferDetailData, transfer } = useTransfer();
+
   console.log("T transfer", transfer);
   const [recipientName, setRecipientName] = useState(transfer?.recipientName);
   const [note, setNote] = useState(transfer?.note);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const errorsChecking = () => {
+    // empty recipient name
+    if (!recipientName) {
+      setAlertMessage("Recipient Name cannot be empty");
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -62,7 +77,10 @@ export default function TransferScreen({ navigation }: Props) {
 
         <View style={styles.content}>
           <View style={styles.card}>
-            <Text style={styles.sectionTitle}>Recipient</Text>
+            <Text style={styles.sectionTitle}>
+              Recipient
+              <Text style={{ color: "red" }}> *</Text>
+            </Text>
             <TextInput
               style={styles.input}
               value={recipientName}
@@ -84,6 +102,11 @@ export default function TransferScreen({ navigation }: Props) {
             <TouchableOpacity
               style={styles.transferButton}
               onPress={() => {
+                const errorOccured = errorsChecking();
+                if (errorOccured) {
+                  setShowAlert(errorOccured);
+                  return;
+                }
                 updateTransferDetailData({
                   ...transfer,
                   recipientName,
@@ -97,6 +120,12 @@ export default function TransferScreen({ navigation }: Props) {
           </View>
         </View>
       </LinearGradient>
+      <BaseAlert
+        visible={showAlert}
+        type="error"
+        message={alertMessage}
+        onHide={() => setShowAlert(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -104,7 +133,7 @@ export default function TransferScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#4158D0",
+    backgroundColor: Colors.moderateBlue,
   },
 
   gradient: {
@@ -128,7 +157,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "600",
-    color: "#fff",
+    color: Colors.white,
   },
 
   placeholder: {

@@ -19,6 +19,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
 import SuccessModal from "../../components/TransferSuccessModal";
+import BaseAlert from "../../components/base_components/BaseAlert";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -42,6 +43,19 @@ export default function TransferMoneyScreen({ navigation }: Props) {
   const quickAmounts = [50, 100, 500];
   const [selectedAmount, setSelectedAmount] = useState(0.0);
   const [modalVisible, setModalVisible] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const errorsChecking = () => {
+    // If selected amount is 0 or null
+    if (!selectedAmount || selectedAmount === 0 || selectedAmount === "0") {
+      setAlertMessage("Transfer Amount cannot be empty");
+      return true;
+    }
+
+    return false;
+  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -106,6 +120,11 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             <TouchableOpacity
               style={styles.addButton}
               onPress={() => {
+                const errorOccured = errorsChecking();
+                if (errorOccured) {
+                  setShowAlert(errorOccured);
+                  return;
+                }
                 setModalVisible(true);
               }}
             >
@@ -119,13 +138,18 @@ export default function TransferMoneyScreen({ navigation }: Props) {
         onClose={() => {
           clearTransferDetailData();
           const finalBalance = accountInformation?.balance - selectedAmount;
-          console.log("finalBalance", finalBalance);
           updateAccountInformationData({
             balance: finalBalance,
           });
           navigation.navigate("Home");
           setModalVisible(false);
         }}
+      />
+      <BaseAlert
+        visible={showAlert}
+        type="error"
+        message={alertMessage}
+        onHide={() => setShowAlert(false)}
       />
     </SafeAreaView>
   );

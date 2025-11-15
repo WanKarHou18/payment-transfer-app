@@ -9,6 +9,8 @@ const Colors = {
   pinkPurple: "#C850C0",
   leafGreen: "#00CBA9",
   success: "#5cb85c",
+  error: "#f44336",
+  warning: "#ff9800",
 };
 
 export default Colors;
