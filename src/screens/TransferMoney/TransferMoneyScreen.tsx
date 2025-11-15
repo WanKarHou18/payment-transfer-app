@@ -44,7 +44,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
   console.log("TM transfer", transfer);
 
   const quickAmounts = [50, 100, 500];
-  const [selectedAmount, setSelectedAmount] = useState(0.0);
+  const [selectedAmount, setSelectedAmount] = useState(transfer?.amount || 0.0);
   const [modalVisible, setModalVisible] = useState(false);
 
   const [showAlert, setShowAlert] = useState(false);

@@ -28,8 +28,12 @@ interface Props {
 }
 
 export default function HomeScreen({ navigation }: Props) {
-  const { accountInformation, fetchAccountInformationData, transfer } =
-    useTransfer();
+  const {
+    accountInformation,
+    fetchAccountInformationData,
+    transfer,
+    updateTransferDetailData,
+  } = useTransfer();
   console.log("HS transfer", transfer);
 
   useEffect(() => {
@@ -41,24 +45,31 @@ export default function HomeScreen({ navigation }: Props) {
   }, [accountInformation]);
 
   const renderTransactionItem = ({ item }: any) => (
-    <BaseView style={styles.accountCard}>
-      {/* LEFT SIDE */}
-      <BaseView style={styles.accountLeft}>
-        <BaseView style={styles.rytLogo}>
-          <Text style={styles.rytLogoText}>Ryt</Text>
+    <TouchableOpacity
+      onPress={() => {
+        updateTransferDetailData(item);
+        navigation.navigate("Transfer");
+      }}
+    >
+      <BaseView style={styles.accountCard}>
+        {/* LEFT SIDE */}
+        <BaseView style={styles.accountLeft}>
+          <BaseView style={styles.rytLogo}>
+            <Text style={styles.rytLogoText}>Ryt</Text>
+          </BaseView>
+
+          <BaseView>
+            <Text style={styles.accountName}>{item.recipientName}</Text>
+            {item.note ? <Text>{item.note}</Text> : null}
+          </BaseView>
         </BaseView>
 
-        <BaseView>
-          <Text style={styles.accountName}>{item.recipientName}</Text>
-          {item.note ? <Text>{item.note}</Text> : null}
+        {/* RIGHT SIDE */}
+        <BaseView style={styles.accountRight}>
+          <Text style={styles.accountBalance}>RM {item.amount.toFixed(2)}</Text>
         </BaseView>
       </BaseView>
-
-      {/* RIGHT SIDE */}
-      <BaseView style={styles.accountRight}>
-        <Text style={styles.accountBalance}>RM {item.amount.toFixed(2)}</Text>
-      </BaseView>
-    </BaseView>
+    </TouchableOpacity>
   );
 
   return (
