@@ -38,9 +38,8 @@ export default function TransferMoneyScreen({ navigation }: Props) {
   const {
     updateTransferDetailData,
     transfer,
-    accountInformation,
     clearTransferDetailData,
-    updateAccountInformationData,
+    transferAmountData,
   } = useTransfer();
   console.log("TM transfer", transfer);
 
@@ -155,9 +154,10 @@ export default function TransferMoneyScreen({ navigation }: Props) {
         visible={modalVisible}
         onClose={() => {
           clearTransferDetailData();
-          const finalBalance = accountInformation?.balance - selectedAmount;
-          updateAccountInformationData({
-            balance: finalBalance,
+          transferAmountData({
+            amount: selectedAmount,
+            recipientName: transfer?.recipientName,
+            note: transfer?.note,
           });
           navigation.navigate("Home");
           setModalVisible(false);

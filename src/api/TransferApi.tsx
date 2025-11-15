@@ -12,6 +12,15 @@ const api = {
       throw error;
     }
   },
+
+  transferAmount: async (payload: any) => {
+    try {
+      const response = await axios.post(`${BASE_URL}/transactions`, payload);
+      return response?.data;
+    } catch (error) {
+      throw error;
+    }
+  },
 };
 
 export default api;

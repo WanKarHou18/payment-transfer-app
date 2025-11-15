@@ -48,10 +48,10 @@ app.get("/transactions", (req, res) => {
 
 // Create a new transaction
 app.post("/transactions", (req, res) => {
-  const { amount, recipientName, note = "", date } = req.body;
+  const { amount, recipientName, note = "" } = req.body;
 
-  if (!amount || !recipientName || !date) {
-    return sendResponse(res, 0, "Missing required fields");
+  if (!amount || !recipientName) {
+    return sendResponse(res, 0, `Missing required fields`);
   }
 
   if (account.balance < amount) {
@@ -62,7 +62,7 @@ app.post("/transactions", (req, res) => {
   account.balance -= amount;
 
   // Add transaction
-  const transaction = { amount, recipientName, note, date };
+  const transaction = { amount, recipientName, note };
   transactions.push(transaction);
 
   sendResponse(res, 1, { newBalance: account.balance, transaction });

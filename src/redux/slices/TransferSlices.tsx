@@ -18,11 +18,28 @@ const initialState = {
 };
 
 // Thunk to fetch transfer info
-export const fetchAccountInformation = createAsyncThunk(
+export const fetchAccountInformationThunk = createAsyncThunk(
   "transfer/fetchAccountInformation",
   async (_, thunkAPI) => {
     try {
       const result = await api.fetchAccountInformation();
+
+      if (result?.status === 0) {
+        return thunkAPI.rejectWithValue(result?.data);
+      }
+
+      return result?.data || { balance: 0 };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
+export const transferAmountThunk = createAsyncThunk(
+  "transfer/transferAmount",
+  async (payload, thunkAPI) => {
+    try {
+      const result = await api.transferAmount(payload);
 
       if (result?.status === 0) {
         return thunkAPI.rejectWithValue(result?.data);
@@ -63,15 +80,30 @@ const transferSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchAccountInformation.pending, (state) => {
+      .addCase(fetchAccountInformationThunk.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchAccountInformation.fulfilled, (state, action) => {
+      .addCase(fetchAccountInformationThunk.fulfilled, (state, action) => {
         state.loading = false;
         state.accountInformation = action.payload;
       })
-      .addCase(fetchAccountInformation.rejected, (state, action) => {
+      .addCase(fetchAccountInformationThunk.rejected, (state, action) => {
+        state.loading = false;
+        // @ts-ignore
+        state.error = action.payload;
+      })
+
+      // Transfer Amount
+      .addCase(transferAmountThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(transferAmountThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(transferAmountThunk.rejected, (state, action) => {
         state.loading = false;
         // @ts-ignore
         state.error = action.payload;
