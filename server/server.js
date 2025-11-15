@@ -36,12 +36,12 @@ app.get("/balance", (req, res) => {
   });
 });
 
-app.post("/balance", (req, res) => {
+app.post("/top-up-balance", (req, res) => {
   const { amount } = req.body;
   if (typeof amount !== "number")
     return sendResponse(res, 0, "Amount must be a number");
-  account.balance = amount;
-  sendResponse(res, 1, { newBalance: account.balance });
+  account.balance = amount + Number(account.balance);
+  sendResponse(res, 1, { newBalance: account.balance, transactions });
 });
 
 // Fetch transactions

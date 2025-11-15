@@ -21,6 +21,17 @@ const api = {
       throw error;
     }
   },
+
+  topUpBalance: async (payload: any) => {
+    try {
+      console.log("payload", payload);
+      const response = await axios.post(`${BASE_URL}/top-up-balance`, payload);
+      console.log("return", response);
+      return response?.data;
+    } catch (error) {
+      console.log("topup error", error);
+    }
+  },
 };
 
 export default api;

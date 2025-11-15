@@ -66,7 +66,9 @@ export default function HomeScreen({ navigation }: Props) {
 
         {/* RIGHT SIDE */}
         <BaseView style={styles.accountRight}>
-          <Text style={styles.accountBalance}>RM {item.amount.toFixed(2)}</Text>
+          <Text style={styles.accountBalance}>
+            RM {item?.amount ? item?.amount : 0}
+          </Text>
         </BaseView>
       </BaseView>
     </TouchableOpacity>
@@ -192,7 +194,7 @@ export default function HomeScreen({ navigation }: Props) {
 
           {/* Transactions Section */}
           <BaseView style={styles.accountsSection}>
-            <Text style={styles.accountsTitle}>Transactions</Text>
+            <Text style={styles.accountsTitle}>Transfer Transactions</Text>
             <FlatList
               data={accountInformation?.transactions || []}
               renderItem={renderTransactionItem}

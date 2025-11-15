@@ -36,6 +36,24 @@ export const fetchAccountInformationThunk = createAsyncThunk(
   }
 );
 
+// Top up balance
+export const topUpBalanceThunk = createAsyncThunk(
+  "transfer/topUpBalance",
+  async (payload, thunkAPI) => {
+    try {
+      const result = await api.topUpBalance(payload);
+
+      if (result?.status === 0) {
+        return thunkAPI.rejectWithValue(result?.data);
+      }
+
+      return result?.data || { balance: 0 };
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(error?.message);
+    }
+  }
+);
+
 export const transferAmountThunk = createAsyncThunk(
   "transfer/transferAmount",
   async (payload, thunkAPI) => {
@@ -105,6 +123,21 @@ const transferSlice = createSlice({
         state.error = null;
       })
       .addCase(transferAmountThunk.rejected, (state, action) => {
+        state.loading = false;
+        // @ts-ignore
+        state.error = action.payload;
+      })
+
+      // Top Up Balance
+      .addCase(topUpBalanceThunk.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(topUpBalanceThunk.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+      })
+      .addCase(topUpBalanceThunk.rejected, (state, action) => {
         state.loading = false;
         // @ts-ignore
         state.error = action.payload;

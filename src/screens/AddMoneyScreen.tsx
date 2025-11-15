@@ -1,5 +1,5 @@
 // third party
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -11,39 +11,94 @@ import {
 import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
-import { SafeAreaView } from "react-native-safe-area-context";
 
 // this project
 import { RootStackParamList } from "../navigation/AppNavigator";
+import { sanitizeCashInput } from "../helpers/DataHelper";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { useTransfer } from "../hooks/useTransfer";
 import Colors from "../constants/Colors";
+import SuccessModal from "../components/TransferSuccessModal";
+import BaseAlert from "../components/base_components/BaseAlert";
+import {
+  authenticateFingerprint,
+  isFingerprintAvailable,
+} from "../helpers/FingerPrint";
 
-type AddMoneyScreenNavigationProp = StackNavigationProp<
+type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
-  "AddMoney"
+  "TransferMoney"
 >;
 
 interface Props {
-  navigation: AddMoneyScreenNavigationProp;
+  navigation: TransferMoneyScreenNavigationProp;
 }
 
-export default function AddMoneyScreen({ navigation }: Props) {
+export default function TransferMoneyScreen({ navigation }: Props) {
+  const { topUpBalanceData } = useTransfer();
+
+  const quickAmounts = [50, 100, 500];
+  const [selectedAmount, setSelectedAmount] = useState(0.0);
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const [showAlert, setShowAlert] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+
+  const errorsChecking = () => {
+    // If selected amount is 0 or null
+    if (!selectedAmount || selectedAmount === 0 || selectedAmount === "0") {
+      setAlertMessage("Transfer Amount cannot be empty");
+      return true;
+    }
+
+    return false;
+  };
+
+  const handleTransfer = async () => {
+    const errorOccured = errorsChecking();
+    if (errorOccured) {
+      setShowAlert(errorOccured);
+      return;
+    }
+    const fingerprintAvailable = await isFingerprintAvailable();
+    if (!fingerprintAvailable) {
+      setShowAlert(true);
+      setAlertMessage(
+        "'Your device does not support fingerprint authentication or no fingerprint is enrolled"
+      );
+      return;
+    }
+    const success = await authenticateFingerprint();
+    if (!success) {
+      setShowAlert(true);
+      setAlertMessage("Authentication Failed, Unable to confirm the payment.");
+      return;
+    }
+
+    topUpBalanceData({ amount: selectedAmount });
+
+    setModalVisible(true);
+  };
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <LinearGradient
-        colors={[Colors.moderateBlue, Colors.pinkPurple]}
+        colors={["#4158D0", "#C850C0"]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
         <View style={styles.header}>
           <TouchableOpacity
-            onPress={() => navigation.goBack()}
+            onPress={() => {
+              navigation.goBack();
+            }}
             style={styles.backButton}
           >
             <Ionicons name="arrow-back" size={24} color={Colors.white} />
           </TouchableOpacity>
-          <Text style={styles.title}>Add Money</Text>
+          <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
         </View>
 
@@ -54,6 +109,12 @@ export default function AddMoneyScreen({ navigation }: Props) {
               <Text style={styles.currency}>RM</Text>
               <TextInput
                 style={styles.input}
+                value={selectedAmount.toString()}
+                onChangeText={(text) => {
+                  const finalNumber = sanitizeCashInput(text);
+                  // @ts-ignore
+                  setSelectedAmount(Number(finalNumber));
+                }}
                 placeholder="0.00"
                 keyboardType="decimal-pad"
                 placeholderTextColor="#999"
@@ -61,23 +122,38 @@ export default function AddMoneyScreen({ navigation }: Props) {
             </View>
 
             <View style={styles.quickAmounts}>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 50</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 100</Text>
-              </TouchableOpacity>
-              <TouchableOpacity style={styles.quickButton}>
-                <Text style={styles.quickText}>RM 500</Text>
-              </TouchableOpacity>
+              {quickAmounts?.map((amount) => (
+                <TouchableOpacity
+                  key={amount}
+                  style={styles.quickButton}
+                  onPress={() => {
+                    setSelectedAmount(amount);
+                  }}
+                >
+                  <Text style={styles.quickText}>RM {amount}</Text>
+                </TouchableOpacity>
+              ))}
             </View>
 
-            <TouchableOpacity style={styles.addButton}>
+            <TouchableOpacity style={styles.addButton} onPress={handleTransfer}>
               <Text style={styles.addButtonText}>Add Money</Text>
             </TouchableOpacity>
           </View>
         </View>
       </LinearGradient>
+      <SuccessModal
+        visible={modalVisible}
+        onClose={() => {
+          navigation.navigate("Home");
+          setModalVisible(false);
+        }}
+      />
+      <BaseAlert
+        visible={showAlert}
+        type="error"
+        message={alertMessage}
+        onHide={() => setShowAlert(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -85,7 +161,8 @@ export default function AddMoneyScreen({ navigation }: Props) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.moderateBlue,
+    paddingTop: 20,
+    backgroundColor: "#4158D0",
   },
   gradient: {
     flex: 1,
@@ -104,7 +181,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    color: Colors.white,
+    color: "#fff",
     fontSize: 18,
     fontWeight: "600",
   },
@@ -116,20 +193,20 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    backgroundColor: Colors.white,
+    backgroundColor: "#fff",
     borderRadius: 20,
     padding: 25,
   },
   label: {
     fontSize: 16,
-    color: Colors.darkGrey,
+    color: "#666",
     marginBottom: 15,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 2,
-    borderBottomColor: Colors.moderateBlue,
+    borderBottomColor: "#0000FF",
     paddingBottom: 10,
     marginBottom: 30,
   },
@@ -143,7 +220,7 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 32,
     fontWeight: "700",
-    color: Colors.black,
+    color: "#000",
   },
   quickAmounts: {
     flexDirection: "row",
@@ -152,7 +229,7 @@ const styles = StyleSheet.create({
   },
   quickButton: {
     flex: 1,
-    backgroundColor: Colors.white,
+    backgroundColor: "#F5F5F7",
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: "center",
@@ -163,13 +240,13 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   addButton: {
-    backgroundColor: Colors.moderateBlue,
+    backgroundColor: "#0000FF",
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
   },
   addButtonText: {
-    color: Colors.white,
+    color: "#fff",
     fontSize: 16,
     fontWeight: "600",
   },

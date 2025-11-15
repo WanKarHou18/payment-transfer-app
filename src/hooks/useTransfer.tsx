@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   clearTransferDetail,
   fetchAccountInformationThunk,
+  topUpBalanceThunk,
   transferAmountThunk,
   updateAccountInformation,
   updateTransferDetail,
@@ -36,6 +37,9 @@ export const useTransfer = () => {
     dispatch(transferAmountThunk(payload));
   };
 
+  const topUpBalanceData = (payload: {}) => {
+    dispatch(topUpBalanceThunk(payload));
+  };
   return {
     transfer,
     accountInformation,
@@ -43,6 +47,7 @@ export const useTransfer = () => {
     updateTransferDetailData,
     clearTransferDetailData,
     updateAccountInformationData,
+    topUpBalanceData,
     transferAmountData,
   };
 };
