@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, StyleSheet, Text, View } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { Animated, StyleSheet, Text } from "react-native";
 import Colors from "../../constants/Colors";
+import BaseIcon from "./BaseIcon";
 
 interface BaseAlertProps {
   message: string;
@@ -72,10 +72,11 @@ export default function BaseAlert({
         },
       ]}
     >
-      <Ionicons
+      <BaseIcon
+        type="Ionicons"
         name={getIcon()}
         size={20}
-        color="#fff"
+        color={Colors.white}
         style={{ marginRight: 8 }}
       />
       <Text style={styles.text}>{message}</Text>

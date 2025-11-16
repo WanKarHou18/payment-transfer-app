@@ -11,7 +11,6 @@ import {
   FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
 import { StackNavigationProp } from "@react-navigation/stack";
 import * as Contacts from "expo-contacts";
 import { Alert } from "react-native";
@@ -22,6 +21,7 @@ import { RootStackParamList } from "../../navigation/AppNavigator";
 import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
 import BaseAlert from "../../components/base_components/BaseAlert";
+import BaseIcon from "../../components/base_components/BaseIcon";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -98,7 +98,7 @@ export default function TransferScreen({ navigation }: Props) {
             }}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.white} />
+            <BaseIcon type="Ionicons" name="arrow-black" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
@@ -124,7 +124,7 @@ export default function TransferScreen({ navigation }: Props) {
                 style={styles.contactButton}
                 onPress={pickContact}
               >
-                <Ionicons name="person" size={22} color={Colors.white} />
+                <BaseIcon type="Ionicons" name="person" color={Colors.white} />
               </TouchableOpacity>
             </View>
 
@@ -183,7 +183,11 @@ export default function TransferScreen({ navigation }: Props) {
                     setShowContactsModal(false);
                   }}
                 >
-                  <Ionicons name="person-circle" size={24} color="#666" />
+                  <BaseIcon
+                    type="Ionicons"
+                    name="person-circle"
+                    color={Colors.grey}
+                  />
                   <Text style={styles.contactName}>{item?.name}</Text>
                 </TouchableOpacity>
               )}

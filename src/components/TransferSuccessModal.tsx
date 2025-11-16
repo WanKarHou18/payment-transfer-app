@@ -2,15 +2,14 @@ import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   Modal,
   TouchableOpacity,
   Animated,
   Easing,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { BlurView } from "expo-blur";
 import Colors from "../constants/Colors";
+import BaseIcon from "./base_components/BaseIcon";
 
 interface SuccessModalProps {
   visible: boolean;
@@ -48,7 +47,12 @@ export default function SuccessModal({
       {/* Full-screen blur overlay */}
       <BlurView intensity={100} tint="dark" style={styles.fullscreenBlur}>
         <Animated.View style={[styles.modalContainer, { opacity: fadeAnim }]}>
-          <Ionicons name="checkmark-circle" size={80} color={Colors.success} />
+          <BaseIcon
+            type="Ionicons"
+            name="checkmark-circle"
+            size={80}
+            color={Colors.success}
+          />
           <Text style={styles.title}>Success!</Text>
           <Text style={styles.message}>{message}</Text>
           <TouchableOpacity style={styles.button} onPress={onClose}>

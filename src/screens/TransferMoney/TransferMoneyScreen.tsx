@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-import { Ionicons } from "@expo/vector-icons";
+
 import { StackNavigationProp } from "@react-navigation/stack";
 
 // this project
@@ -24,6 +24,7 @@ import {
   authenticateFingerprint,
   isFingerprintAvailable,
 } from "../../helpers/FingerPrint";
+import BaseIcon from "../../components/base_components/BaseIcon";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -129,7 +130,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             }}
             style={styles.backButton}
           >
-            <Ionicons name="arrow-back" size={24} color={Colors.white} />
+            <BaseIcon type="Ionicons" name="arrow-back" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />

@@ -107,7 +107,6 @@ export default function HomeScreen({ navigation }: Props) {
               <BaseIcon
                 type="Ionicons"
                 name="notifications-outline"
-                size={24}
                 color={Colors.white}
               />
             </TouchableOpacity>
