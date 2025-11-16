@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
   StatusBar,
   TextInput,
@@ -21,6 +20,7 @@ import Colors from "../../constants/Colors";
 import BaseAlert from "../../components/base_components/BaseAlert";
 import BaseIcon from "../../components/base_components/BaseIcon";
 import ContactListModal from "../../components/ContactListModal";
+import BaseView from "../../components/base_components/BaseView";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -83,7 +83,7 @@ export default function TransferScreen({ navigation }: Props) {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
-        <View style={styles.header}>
+        <BaseView style={styles.header}>
           <TouchableOpacity
             onPress={() => {
               setRecipientName("");
@@ -100,17 +100,17 @@ export default function TransferScreen({ navigation }: Props) {
             <BaseIcon type="Ionicons" name="arrow-back" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
-          <View style={styles.placeholder} />
-        </View>
+          <BaseView style={styles.placeholder} />
+        </BaseView>
 
-        <View style={styles.content}>
-          <View style={styles.card}>
+        <BaseView style={styles.content}>
+          <BaseView style={styles.card}>
             <Text style={styles.sectionTitle}>
               Recipient
               <Text style={{ color: Colors.red }}> *</Text>
             </Text>
 
-            <View style={styles.contactRow}>
+            <BaseView style={styles.contactRow}>
               <TextInput
                 style={[styles.input, { flex: 1 }]}
                 value={recipientName}
@@ -125,7 +125,7 @@ export default function TransferScreen({ navigation }: Props) {
               >
                 <BaseIcon type="Ionicons" name="person" color={Colors.white} />
               </TouchableOpacity>
-            </View>
+            </BaseView>
 
             <Text style={styles.sectionTitle}>Note (Optional)</Text>
             <TextInput
@@ -155,8 +155,8 @@ export default function TransferScreen({ navigation }: Props) {
             >
               <Text style={styles.transferButtonText}>Proceed</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </BaseView>
+        </BaseView>
       </LinearGradient>
       <BaseAlert
         visible={showAlert}

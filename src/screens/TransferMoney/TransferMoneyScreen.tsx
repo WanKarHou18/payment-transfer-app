@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
-  View,
   TouchableOpacity,
   StatusBar,
   TextInput,
@@ -25,6 +24,7 @@ import {
 } from "../../helpers/FingerPrint";
 import BaseIcon from "../../components/base_components/BaseIcon";
 import BaseLoader from "../../components/base_components/BaseLoader";
+import BaseView from "../../components/base_components/BaseView";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -119,7 +119,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
       >
-        <View style={styles.header}>
+        <BaseView style={styles.header}>
           <TouchableOpacity
             onPress={() => {
               updateTransferDetailData({
@@ -134,13 +134,13 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             <BaseIcon type="Ionicons" name="arrow-back" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
-          <View style={styles.placeholder} />
-        </View>
+          <BaseView style={styles.placeholder} />
+        </BaseView>
 
-        <View style={styles.content}>
-          <View style={styles.card}>
+        <BaseView style={styles.content}>
+          <BaseView style={styles.card}>
             <Text style={styles.label}>Enter Amount</Text>
-            <View style={styles.inputContainer}>
+            <BaseView style={styles.inputContainer}>
               <Text style={styles.currency}>RM</Text>
               <TextInput
                 style={styles.input}
@@ -154,9 +154,9 @@ export default function TransferMoneyScreen({ navigation }: Props) {
                 keyboardType="decimal-pad"
                 placeholderTextColor={Colors.mediumGrey}
               />
-            </View>
+            </BaseView>
 
-            <View style={styles.quickAmounts}>
+            <BaseView style={styles.quickAmounts}>
               {quickAmounts?.map((amount) => (
                 <TouchableOpacity
                   key={amount}
@@ -168,13 +168,13 @@ export default function TransferMoneyScreen({ navigation }: Props) {
                   <Text style={styles.quickText}>RM {amount}</Text>
                 </TouchableOpacity>
               ))}
-            </View>
+            </BaseView>
 
             <TouchableOpacity style={styles.addButton} onPress={handleTransfer}>
               <Text style={styles.addButtonText}>Transfer</Text>
             </TouchableOpacity>
-          </View>
-        </View>
+          </BaseView>
+        </BaseView>
       </LinearGradient>
       <SuccessModal
         visible={modalVisible}

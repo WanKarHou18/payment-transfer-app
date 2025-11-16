@@ -1,7 +1,6 @@
 import React from "react";
 import {
   Modal,
-  View,
   Text,
   FlatList,
   TouchableOpacity,
@@ -10,6 +9,7 @@ import {
 import { BlurView } from "expo-blur";
 import BaseIcon from "./base_components/BaseIcon";
 import Colors from "../constants/Colors";
+import BaseView from "./base_components/BaseView";
 
 interface Contact {
   id: string;
@@ -33,7 +33,7 @@ export default function ContactListModal({
     <Modal visible={visible} transparent animationType="fade">
       {/* Blur background */}
       <BlurView intensity={30} tint="dark" style={styles.modalBackdrop}>
-        <View style={styles.modalContent}>
+        <BaseView style={styles.modalContent}>
           <Text style={styles.modalTitle}>Select Recipient</Text>
 
           <FlatList
@@ -60,7 +60,7 @@ export default function ContactListModal({
           <TouchableOpacity style={styles.closeBtn} onPress={onClose}>
             <Text style={styles.closeText}>Cancel</Text>
           </TouchableOpacity>
-        </View>
+        </BaseView>
       </BlurView>
     </Modal>
   );

@@ -1,10 +1,11 @@
 // third party
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 
 //this project
 import Colors from "../constants/Colors";
 import BaseIcon from "./base_components/BaseIcon";
+import BaseView from "./base_components/BaseView";
 
 interface ActionButtonProps {
   icon: string;
@@ -24,7 +25,7 @@ const ActionButton = ({ icon, label, onPress }: ActionButtonProps) => {
   };
 
   return (
-    <View style={styles.actionButton}>
+    <BaseView style={styles.actionButton}>
       <TouchableOpacity style={styles.actionButtonCircle} onPress={onPress}>
         <BaseIcon
           type="Ionicons"
@@ -34,7 +35,7 @@ const ActionButton = ({ icon, label, onPress }: ActionButtonProps) => {
         />
       </TouchableOpacity>
       <Text style={styles.actionButtonLabel}>{label}</Text>
-    </View>
+    </BaseView>
   );
 };
 
