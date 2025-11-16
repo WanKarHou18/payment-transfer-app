@@ -7,8 +7,6 @@ import {
   TouchableOpacity,
   StatusBar,
   TextInput,
-  Modal,
-  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -22,6 +20,7 @@ import { useTransfer } from "../../hooks/useTransfer";
 import Colors from "../../constants/Colors";
 import BaseAlert from "../../components/base_components/BaseAlert";
 import BaseIcon from "../../components/base_components/BaseIcon";
+import ContactListModal from "../../components/ContactListModal";
 
 type TransferScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -72,7 +71,7 @@ export default function TransferScreen({ navigation }: Props) {
       return;
     }
 
-    setContactsList(data); // show in modal
+    setContactsList(data);
     setShowContactsModal(true);
   };
   return (
@@ -98,7 +97,7 @@ export default function TransferScreen({ navigation }: Props) {
             }}
             style={styles.backButton}
           >
-            <BaseIcon type="Ionicons" name="arrow-black" color={Colors.white} />
+            <BaseIcon type="Ionicons" name="arrow-back" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
@@ -165,43 +164,15 @@ export default function TransferScreen({ navigation }: Props) {
         message={alertMessage}
         onHide={() => setShowAlert(false)}
       />
-      <Modal visible={showContactsModal} transparent animationType="fade">
-        <View style={styles.modalBackdrop}>
-          <View style={styles.modalContent}>
-            <Text style={styles.modalTitle}>Select Recipient</Text>
-
-            <FlatList
-              data={contactsList}
-              keyExtractor={(item) => item?.id}
-              style={{ maxHeight: 350 }}
-              showsVerticalScrollIndicator={false}
-              renderItem={({ item }) => (
-                <TouchableOpacity
-                  style={styles.contactItem}
-                  onPress={() => {
-                    setRecipientName(item?.name || "");
-                    setShowContactsModal(false);
-                  }}
-                >
-                  <BaseIcon
-                    type="Ionicons"
-                    name="person-circle"
-                    color={Colors.grey}
-                  />
-                  <Text style={styles.contactName}>{item?.name}</Text>
-                </TouchableOpacity>
-              )}
-            />
-
-            <TouchableOpacity
-              style={styles.closeBtn}
-              onPress={() => setShowContactsModal(false)}
-            >
-              <Text style={styles.closeText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modal>
+      <ContactListModal
+        visible={showContactsModal}
+        contacts={contactsList}
+        onSelect={(contact) => {
+          setRecipientName(contact.name);
+          setShowContactsModal(false);
+        }}
+        onClose={() => setShowContactsModal(false)}
+      />
     </SafeAreaView>
   );
 }
@@ -346,62 +317,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     elevation: 3,
-  },
-  //Modal Backdrop + Modal Container
-  contactName: {
-    marginLeft: 12,
-    fontSize: 16,
-    color: "#333",
-  },
-  modalBackdrop: {
-    flex: 1,
-    backgroundColor: "rgba(0,0,0,0.4)",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  modalContent: {
-    width: "85%",
-    maxHeight: "70%",
-    backgroundColor: "#fff",
-    borderRadius: 16,
-    paddingVertical: 20,
-    paddingHorizontal: 15,
-
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 4 },
-    shadowOpacity: 0.3,
-    shadowRadius: 6,
-    elevation: 6,
-  },
-  //Modal Title
-  modalTitle: {
-    fontSize: 18,
-    fontWeight: "700",
-    textAlign: "center",
-    marginBottom: 15,
-    color: "#333",
-  },
-  //Contact List Item
-  contactItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingVertical: 12,
-    paddingHorizontal: 8,
-    borderBottomWidth: 1,
-    borderBottomColor: "#eee",
-  },
-  //Cancel Button
-  closeBtn: {
-    marginTop: 15,
-    alignSelf: "center",
-    paddingVertical: 10,
-    paddingHorizontal: 30,
-    borderRadius: 20,
-    backgroundColor: "#ddd",
-  },
-  closeText: {
-    fontSize: 16,
-    fontWeight: "600",
-    color: "#333",
   },
 });

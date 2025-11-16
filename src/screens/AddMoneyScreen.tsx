@@ -99,7 +99,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
             }}
             style={styles.backButton}
           >
-            <BaseIcon type="Ionicons" name="arrow-black" color={Colors.white} />
+            <BaseIcon type="Ionicons" name="arrow-back" color={Colors.white} />
           </TouchableOpacity>
           <Text style={styles.title}>Transfer Money</Text>
           <View style={styles.placeholder} />
