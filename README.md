@@ -6,6 +6,21 @@ Follow these steps to get the Payment Transfer App setup and running smoothly.
 
 ## Mobile App Demo
 
+
+https://github.com/user-attachments/assets/4369e937-9cee-4499-8bbc-7391a6993593
+
+
+
+Splash screen when opening the app. 
+
+<img width="187" height="413" alt="image" src="https://github.com/user-attachments/assets/f1a6278e-9144-4f8a-a3dc-5d25ffece960" />
+
+The black out part in the video is actually is for fingerprint authentication, due to security reason, it was unable to record out. May check the UI for fingerprint authentication here. 
+
+<img width="187" height="413" alt="image" src="https://github.com/user-attachments/assets/e3f0f6bc-f6d7-4790-ac86-21bc9064876d" />
+
+And the display alert of authentication fail is because user did not process the finger authentication which they required.
+
 ## Overall Architecture
 <img width="551" height="340" alt="image" src="https://github.com/user-attachments/assets/829d1e94-55a2-405d-9a0e-01b6b65ff896" />
 
@@ -28,7 +43,9 @@ Follow these steps to get the Payment Transfer App setup and running smoothly.
 <img width="748" height="176" alt="image" src="https://github.com/user-attachments/assets/e898cf80-299e-4cbb-ba99-1f3d9ef4dc70" />
 
 - Need help finding your IPv4 address? This link might help:  
-  [How to find your IP address](https://www.avast.com/c-how-to-find-ip-address)  
+  [How to find your IP address](https://www.avast.com/c-how-to-find-ip-address)
+
+- To check out on the project remarks and summary, may refer to the document - Wan Kar Hou - Payment Transfer App Summary & Remarks which had sent separately via email.
 - If you encounter any issues or need clarification, feel free to reach out via LinkedIn or WhatsApp. Thanks! 🙏
 
 ---
@@ -77,7 +94,6 @@ Follow these steps to get the Payment Transfer App setup and running smoothly.
    - Press `a` to run on an Android emulator.  
    - Press `i` to run on an iOS simulator (macOS only).  
    - Press `w` to run in the web browser.
-<img width="528" height="300" alt="image" src="https://github.com/user-attachments/assets/b051a3f0-11fe-4612-bd82-01a7aba29f4d" />
 ---
 
 ## Run on a Real Android Device 🤖
