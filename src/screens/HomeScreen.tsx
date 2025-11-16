@@ -22,6 +22,7 @@ import { useTransfer } from "../hooks/useTransfer";
 import { formatCurrency } from "../helpers/DataHelper";
 import BaseLoader from "../components/base_components/BaseLoader";
 import { TextFontSize } from "../constants/TextFontSize";
+import { Link } from "../constants/Link";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -175,7 +176,14 @@ export default function HomeScreen({ navigation }: Props) {
                 </BaseView>
                 <Text style={styles.rmText}>RM 12</Text>
               </BaseView>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("WebView", {
+                    title: "Pay Later",
+                    url: Link.rytPayLater,
+                  });
+                }}
+              >
                 <Text style={styles.promoLink}>Apply now &gt;</Text>
               </TouchableOpacity>
             </BaseView>
@@ -189,7 +197,14 @@ export default function HomeScreen({ navigation }: Props) {
               <Text style={styles.promoDescription}>
                 Earn up to 4% p.a.,{"\n"}paid every day
               </Text>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigation.navigate("WebView", {
+                    title: "Savings",
+                    url: Link.rytSavings,
+                  });
+                }}
+              >
                 <Text style={styles.promoLink}>Learn more &gt;</Text>
               </TouchableOpacity>
             </BaseView>
