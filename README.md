@@ -21,6 +21,9 @@ The black out part in the video is actually is for fingerprint authentication, d
 
 And the display alert of authentication fail is because user did not process the finger authentication which they required.
 
+<img width="187" height="413" alt="image" src="https://github.com/user-attachments/assets/8ab867d6-17c0-42e5-a424-c40af4b6fc5b" />
+
+
 ## Overall Architecture
 <img width="551" height="340" alt="image" src="https://github.com/user-attachments/assets/829d1e94-55a2-405d-9a0e-01b6b65ff896" />
 
@@ -52,7 +55,7 @@ And the display alert of authentication fail is because user did not process the
 
 ## Clone the Project 💻
 
-1. Clone the project repository using git:
+1. Clone the project repository using git or download project in ZIP
     ```bash
     git clone <repository-url>
     ```
@@ -90,7 +93,14 @@ And the display alert of authentication fail is because user did not process the
     ```bash
     npx expo start
     ```
-5. When the QR code appears, press the corresponding key to run on your preferred device:  
+    If issue occured when opening app in device/emulator, may try on with
+    ```bash
+    npx expo start --tunnel
+    ```
+     ```bash
+    npx expo start -c
+    ```
+6. When the QR code appears, press the corresponding key to run on your preferred device:  
    - Press `a` to run on an Android emulator.  
    - Press `i` to run on an iOS simulator (macOS only).  
    - Press `w` to run in the web browser.
