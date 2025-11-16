@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ScrollView,
   StatusBar,
-  FlatList,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { StackNavigationProp } from "@react-navigation/stack";
@@ -208,12 +207,13 @@ export default function HomeScreen({ navigation }: Props) {
           {/* Transactions Section */}
           <BaseView style={styles.accountsSection}>
             <Text style={styles.accountsTitle}>Transfer Transactions</Text>
-            <FlatList
-              data={accountInformation?.transactions || []}
-              renderItem={renderTransactionItem}
-              keyExtractor={(_: any, index: number) => index.toString()}
-              contentContainerStyle={{ paddingVertical: 10 }}
-            />
+            <BaseView style={{ paddingVertical: 10 }}>
+              {(accountInformation?.transactions || []).map((item, index) => (
+                <BaseView key={index}>
+                  {renderTransactionItem({ item, index })}
+                </BaseView>
+              ))}
+            </BaseView>
           </BaseView>
         </ScrollView>
       </LinearGradient>
