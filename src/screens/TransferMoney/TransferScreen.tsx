@@ -34,7 +34,6 @@ interface Props {
 export default function TransferScreen({ navigation }: Props) {
   const { updateTransferDetailData, transfer } = useTransfer();
 
-  console.log("T transfer", transfer);
   const [recipientName, setRecipientName] = useState(transfer?.recipientName);
   const [note, setNote] = useState(transfer?.note);
 

@@ -38,15 +38,10 @@ export default function HomeScreen({ navigation }: Props) {
     updateTransferDetailData,
     loading,
   } = useTransfer();
-  console.log("HS transfer", transfer);
 
   useEffect(() => {
     fetchAccountInformationData();
   }, []);
-
-  useEffect(() => {
-    console.log("accountInformation", accountInformation);
-  }, [accountInformation]);
 
   const renderTransactionItem = ({ item }: any) => (
     <TouchableOpacity
