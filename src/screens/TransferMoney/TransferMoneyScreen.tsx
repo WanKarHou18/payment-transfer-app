@@ -9,7 +9,6 @@ import {
   TextInput,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
-
 import { StackNavigationProp } from "@react-navigation/stack";
 
 // this project
@@ -177,6 +176,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
       </LinearGradient>
       <SuccessModal
         visible={modalVisible}
+        message={`Transfer successfully to ${transfer?.recipientName}`}
         onClose={() => {
           setModalVisible(false);
           clearErrorData();

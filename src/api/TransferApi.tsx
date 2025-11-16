@@ -9,7 +9,6 @@ const api = {
       return response?.data;
     } catch (error) {
       console.log("error", error);
-      throw error;
     }
   },
 
@@ -17,9 +16,7 @@ const api = {
     try {
       const response = await axios.post(`${BASE_URL}/transactions`, payload);
       return response?.data;
-    } catch (error) {
-      throw error;
-    }
+    } catch (error) {}
   },
 
   topUpBalance: async (payload: any) => {

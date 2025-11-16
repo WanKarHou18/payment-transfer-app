@@ -146,6 +146,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
       </LinearGradient>
       <SuccessModal
         visible={modalVisible}
+        message={`Top up successfully`}
         onClose={() => {
           navigation.navigate("Home");
           setModalVisible(false);
