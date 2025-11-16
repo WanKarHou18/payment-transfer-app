@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 30,
     borderRadius: 20,
-    backgroundColor: "#ddd",
+    backgroundColor: Colors.lightGey,
   },
   closeText: {
     fontSize: 16,

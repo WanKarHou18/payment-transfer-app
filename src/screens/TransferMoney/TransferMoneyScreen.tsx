@@ -24,6 +24,7 @@ import {
   isFingerprintAvailable,
 } from "../../helpers/FingerPrint";
 import BaseIcon from "../../components/base_components/BaseIcon";
+import BaseLoader from "../../components/base_components/BaseLoader";
 
 type TransferMoneyScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -111,8 +112,9 @@ export default function TransferMoneyScreen({ navigation }: Props) {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
+      {loading && <BaseLoader />}
       <LinearGradient
-        colors={["#4158D0", "#C850C0"]}
+        colors={[Colors.deepModerateBlue, Colors.pinkPurple]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -150,7 +152,7 @@ export default function TransferMoneyScreen({ navigation }: Props) {
                 }}
                 placeholder="0.00"
                 keyboardType="decimal-pad"
-                placeholderTextColor="#999"
+                placeholderTextColor={Colors.mediumGrey}
               />
             </View>
 
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     paddingTop: 20,
-    backgroundColor: "#4158D0",
+    backgroundColor: Colors.moderateBlue,
   },
   gradient: {
     flex: 1,
@@ -223,7 +225,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   title: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 18,
     fontWeight: "600",
   },
@@ -235,34 +237,34 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 20,
     padding: 25,
   },
   label: {
     fontSize: 16,
-    color: "#666",
+    color: Colors.grey,
     marginBottom: 15,
   },
   inputContainer: {
     flexDirection: "row",
     alignItems: "center",
     borderBottomWidth: 2,
-    borderBottomColor: "#0000FF",
+    borderBottomColor: Colors.deepModerateBlue,
     paddingBottom: 10,
     marginBottom: 30,
   },
   currency: {
     fontSize: 32,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
     marginRight: 10,
   },
   input: {
     flex: 1,
     fontSize: 32,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
   },
   quickAmounts: {
     flexDirection: "row",
@@ -271,7 +273,7 @@ const styles = StyleSheet.create({
   },
   quickButton: {
     flex: 1,
-    backgroundColor: "#F5F5F7",
+    backgroundColor: Colors.offWhite,
     paddingVertical: 12,
     borderRadius: 10,
     alignItems: "center",
@@ -282,13 +284,13 @@ const styles = StyleSheet.create({
     color: "#333",
   },
   addButton: {
-    backgroundColor: "#0000FF",
+    backgroundColor: Colors.deepModerateBlue,
     paddingVertical: 16,
     borderRadius: 12,
     alignItems: "center",
   },
   addButtonText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 16,
     fontWeight: "600",
   },

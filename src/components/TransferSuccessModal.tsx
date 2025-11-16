@@ -79,11 +79,11 @@ const styles = StyleSheet.create({
   },
   modalContainer: {
     width: "80%",
-    backgroundColor: "rgba(255,255,255,0.95)",
+    backgroundColor: Colors.offWhite,
     borderRadius: 16,
     padding: 30,
     alignItems: "center",
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 5 },
     shadowOpacity: 0.25,
     shadowRadius: 10,
@@ -93,12 +93,12 @@ const styles = StyleSheet.create({
     fontSize: 22,
     fontWeight: "700",
     marginTop: 15,
-    color: "#333",
+    color: Colors.darkCharcoal,
   },
   message: {
     fontSize: 16,
     textAlign: "center",
-    color: "#666",
+    color: Colors.grey,
     marginVertical: 15,
   },
   button: {
@@ -109,7 +109,7 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   buttonText: {
-    color: "#fff",
+    color: Colors.white,
     fontWeight: "600",
     fontSize: 16,
   },

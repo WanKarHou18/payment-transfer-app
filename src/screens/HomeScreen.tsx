@@ -21,6 +21,7 @@ import BaseIcon from "../components/base_components/BaseIcon";
 import { useTransfer } from "../hooks/useTransfer";
 import { formatCurrency } from "../helpers/DataHelper";
 import BaseLoader from "../components/base_components/BaseLoader";
+import { TextFontSize } from "../constants/TextFontSize";
 
 type HomeScreenNavigationProp = StackNavigationProp<RootStackParamList, "Home">;
 
@@ -299,7 +300,7 @@ const styles = StyleSheet.create({
   },
   interestLabel: {
     fontSize: 13,
-    color: "#666",
+    color: Colors.grey,
     marginRight: 5,
   },
   interestAmount: {
@@ -326,19 +327,19 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   promoCardLeft: {
-    backgroundColor: "#D4F4F4",
+    backgroundColor: Colors.mintMist,
   },
   promoCardRight: {
-    backgroundColor: "#E8F5E8",
+    backgroundColor: Colors.lightMintGreen,
   },
   promoTitle: {
-    fontSize: 16,
+    fontSize: TextFontSize.lg,
     fontWeight: "700",
     color: Colors.black,
     marginBottom: 8,
   },
   promoDescription: {
-    fontSize: 14,
+    fontSize: TextFontSize.md,
     color: Colors.darkCharcoal,
     lineHeight: 20,
     marginBottom: 10,
@@ -389,7 +390,7 @@ const styles = StyleSheet.create({
   },
   promoLink: {
     fontSize: 14,
-    color: "#0000FF",
+    color: Colors.deepModerateBlue,
     fontWeight: "600",
   },
   accountsSection: {
@@ -400,7 +401,7 @@ const styles = StyleSheet.create({
   accountsTitle: {
     fontSize: 18,
     fontWeight: "700",
-    color: "#000",
+    color: Colors.black,
     marginBottom: 15,
   },
   accountCard: {

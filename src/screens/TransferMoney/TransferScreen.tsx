@@ -78,7 +78,7 @@ export default function TransferScreen({ navigation }: Props) {
     <SafeAreaView style={styles.container}>
       <StatusBar barStyle="light-content" />
       <LinearGradient
-        colors={["#4158D0", "#C850C0"]}
+        colors={[Colors.deepModerateBlue, Colors.pinkPurple]}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={styles.gradient}
@@ -107,7 +107,7 @@ export default function TransferScreen({ navigation }: Props) {
           <View style={styles.card}>
             <Text style={styles.sectionTitle}>
               Recipient
-              <Text style={{ color: "red" }}> *</Text>
+              <Text style={{ color: Colors.red }}> *</Text>
             </Text>
 
             <View style={styles.contactRow}>
@@ -220,10 +220,10 @@ const styles = StyleSheet.create({
   },
 
   card: {
-    backgroundColor: "#fff",
+    backgroundColor: Colors.white,
     borderRadius: 16,
     padding: 20,
-    shadowColor: "#000",
+    shadowColor: Colors.black,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.15,
     shadowRadius: 6,
@@ -261,8 +261,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     borderWidth: 1,
-    borderColor: "#ddd",
-    backgroundColor: "#fafafa",
+    borderColor: Colors.lightGey,
+    backgroundColor: Colors.offWhite,
     borderRadius: 10,
     height: 48,
     marginTop: 10,
@@ -273,24 +273,24 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: "600",
     marginRight: 8,
-    color: "#444",
+    color: Colors.darkCharcoal,
   },
 
   amountInput: {
     flex: 1,
     fontSize: 18,
     fontWeight: "500",
-    color: "#333",
+    color: Colors.darkCharcoal,
   },
 
   /* ===== BUTTON ===== */
   transferButton: {
-    backgroundColor: "#4158D0",
+    backgroundColor: Colors.moderateBlue,
     paddingVertical: 14,
     marginTop: 30,
     borderRadius: 12,
     alignItems: "center",
-    shadowColor: "#4158D0",
+    shadowColor: Colors.moderateBlue,
     shadowOffset: { width: 0, height: 3 },
     shadowOpacity: 0.3,
     shadowRadius: 5,
@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
   },
 
   transferButtonText: {
-    color: "#fff",
+    color: Colors.white,
     fontSize: 16,
     fontWeight: "700",
   },

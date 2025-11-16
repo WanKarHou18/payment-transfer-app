@@ -47,13 +47,13 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     borderRadius: 30,
-    backgroundColor: "#0000FF",
+    backgroundColor: Colors.deepModerateBlue,
     alignItems: "center",
     justifyContent: "center",
   },
   actionButtonLabel: {
     fontSize: 12,
-    color: "#333",
+    color: Colors.darkCharcoal,
     fontWeight: "500",
   },
 });
